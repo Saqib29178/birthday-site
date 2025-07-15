@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Rabbia</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #1f1147, #725ac1);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      color: white;
+    }
+
+    /* Floating background */
+    .circles {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .circles span {
+      position: absolute;
+      display: block;
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.05);
+      animation: moveUp 20s linear infinite;
+      border-radius: 50%;
+    }
+    .circles span:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .circles span:nth-child(2) { left: 25%; width: 80px; height: 80px; animation-delay: 2s; }
+    .circles span:nth-child(3) { left: 40%; animation-delay: 4s; }
+    .circles span:nth-child(4) { left: 55%; width: 50px; height: 50px; animation-delay: 1s; }
+    .circles span:nth-child(5) { left: 70%; width: 90px; height: 90px; animation-delay: 3s; }
+    @keyframes moveUp {
+      0% { top: 100%; transform: scale(0.5); }
+      100% { top: -10%; transform: scale(1.2); }
+    }
+
+    /* Gift Box */
+    .gift-box {
+      width: 120px;
+      height: 120px;
+      background: #ff4d6d;
+      border-radius: 20px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      animation: pulse 2s infinite;
+      z-index: 10;
+    }
+
+    .gift-box::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 120px;
+      background: #fff;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .gift-lid {
+      width: 140px;
+      height: 30px;
+      background: #d6336c;
+      position: absolute;
+      top: -30px;
+      left: -10px;
+      border-radius: 10px;
+      transition: top 0.5s ease;
+    }
+
+    .gift-box.open .gift-lid {
+      top: -100px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Reveal Content */
+    #mainContent {
+      display: none;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .coming {
+      font-size: 2.5em;
+      font-weight: 600;
+      animation: slideDown 1.2s ease-out forwards;
+    }
+
+    .birthday {
+      font-size: 3.8em;
+      font-weight: bold;
+      margin-top: 20px;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #ff6ec4, #7873f5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      animation: popUp 2s ease-out 1.5s forwards;
+      opacity: 0;
+    }
+
+    .date-text {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #ffcaff;
+      font-weight: 500;
+      animation: fadeIn 2s ease 2s forwards;
+      opacity: 0;
+    }
+
+    .date-text i {
+      color: #ffccff;
+      margin-right: 6px;
+    }
+
+    .countdown-bar {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 1.05em;
+      font-weight: bold;
+      backdrop-filter: blur(8px);
+      border: 2px solid #ff9adb;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .countdown-bar i {
+      color: #ffbbdd;
+    }
+
+    @keyframes slideDown {
+      0% { transform: translateY(-50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating background -->
+<div class="circles">
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- Gift Box -->
+<div class="gift-box" id="gift" onclick="openGift()">
+  <div class="gift-lid"></div>
+</div>
+
+<!-- Hidden Content -->
+<div class="container" id="mainContent">
+  <div class="coming"><i class="fas fa-gift"></i> Coming Soon</div>
+  <div class="birthday">Happy 19<sup>th</sup> Birthday<br>Rabbia Zaheer</div>
+  <div class="date-text"><i class="fas fa-calendar-alt"></i> 12 August 2025</div>
+</div>
+
+<!-- Countdown -->
+<div class="countdown-bar" id="countdown" style="display: none;">
+  <i class="fas fa-clock"></i> Loading...
+</div>
+
+<script>
+  function openGift() {
+    const gift = document.getElementById("gift");
+    const main = document.getElementById("mainContent");
+    const countdown = document.getElementById("countdown");
+
+    gift.classList.add("open");
+
+    setTimeout(() => {
+      gift.style.display = "none";
+      main.style.display = "block";
+      countdown.style.display = "flex";
+    }, 800);
+  }
+
+  function updateCountdown() {
+    const birthday = new Date("August 12, 2025 00:00:00").getTime();
+    const now = new Date().getTime();
+    const gap = birthday - now;
+
+    const second = 1000,
+          minute = second * 60,
+          hour = minute * 60,
+          day = hour * 24;
+
+    const d = Math.floor(gap / day);
+    const h = Math.floor((gap % day) / hour);
+    const m = Math.floor((gap % hour) / minute);
+    const s = Math.floor((gap % minute) / second);
+
+    if (gap > 0) {
+      document.getElementById("countdown").innerHTML =
+        `<i class="fas fa-clock"></i> ${d} Days ${h} Hours ${m} Minutes ${s} Seconds`;
+    } else {
+      document.getElementById("countdown").innerHTML =
+        `<i class="fas fa-heart"></i> It's her Birthday Today!`;
+    }
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
